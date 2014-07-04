@@ -1,0 +1,121 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <h1>Города</h1>
+                <TMPL_IF NAME="ROWS">
+                    <table class="table">
+                        <th>Город</th>
+                        <th>Страна</th>
+
+                        <th>Туры в этот город</th>
+                        <th>Удалить</th>
+                        <TMPL_LOOP ROWS>
+                            <tr>
+                                <td>
+                                    <TMPL_VAR NAME= NAME>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= COUNTRY>
+                                </td>
+                                <!---->
+                                <form action="../../cgi-bin/search.pl" method="GET">
+                                    <input hidden="true" name="id" value="<TMPL_VAR NAME=ID>"/>
+                                    <td>
+                                        <input type="submit" class="btn btn-primary" value="Искать"/>
+                                    </td>
+                                </form>
+                                <!---->
+                                <td>
+                                    <form action="../../cgi-bin/city/deleteCity.pl" method="POST">
+                                        <input hidden="true" name="id" value="<TMPL_VAR NAME=ID>" />
+                                        <input class="btn btn-danger glyphicon glyphicon-remove" name='submit' type='submit' value='Удалить' onclick="return confirm('Вы точно хотите удалить модель из списка?')" />
+                                    </form>
+                                </td>
+                            </tr>
+                        </TMPL_LOOP>
+                    </table>
+                </TMPL_IF>
+                <!--<hr/>-->
+                <!-- Button trigger modal -->
+                <button class="btn btn-success" data-toggle="modal"
+                        data-target="#add-city-modal">
+                    Добавить город
+                </button>
+                <br/>
+                <br/>
+                <button class="btn btn-success" data-toggle="modal"
+                        data-target="#add-country-modal">
+                    Добавить Страну
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="add-city-modal" tabindex="-1" role="dialog" aria-labelledby="addCity"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="../../cgi-bin/city/addCity.pl" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Добавить город</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" type="text" name="name" placeholder="Название"/>
+                                    <br/>
+                                    <h5>Страна
+                                        <br/>
+                                        <select class="form-control" name="country">
+                                            <TMPL_LOOP COUNTRIES>
+                                                <option>
+                                                    <TMPL_VAR NAME= NAME>
+                                                </option>
+                                            </TMPL_LOOP>
+                                        </select>
+                                    </h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove"
+                                            data-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-success glyphicon glyphicon-floppy-saved">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="add-country-modal" tabindex="-1" role="dialog" aria-labelledby="addCountry"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="../../cgi-bin/addCountry.pl" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="addCountry">Добавить страну</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" type="text" name="name" placeholder="Название"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove"
+                                            data-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-success glyphicon glyphicon-floppy-saved">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+            $('#cities').addClass("active");
+            });
+        </script>
+        <!--<br/>-->
+        <TMPL_INCLUDE NAME="footer.tmpl">

@@ -1,0 +1,45 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br/>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h1>Описание тура и отеля</h1>
+                <br/>
+                <TMPL_IF NAME="ROWS">
+                    <TMPL_LOOP ROWS>
+                        <h5>Страна:
+                            <b><TMPL_VAR NAME= COUNTRY /></b>
+                        </h5>
+                        <h5>Город:
+                            <b><TMPL_VAR NAME= CITY /></b>
+                        </h5>
+                        <h5>Отель:
+                            <TMPL_VAR NAME= HOTEL />
+                        </h5>
+                        <h5>
+                            <p><TMPL_VAR NAME= HOTEL_INFO /></p>
+                        </h5>
+                        <h5>
+                            <p><TMPL_VAR NAME= DESCRIPTION /></p>
+                        </h5>
+                        <h5>
+                            Полная стоимость путёвки: <b><TMPL_VAR NAME= PRICE /></b>
+                        </h5>
+                        <form action="../../cgi-bin/permit/makeDeal.pl" method="POST">
+                            <input name="id" hidden="true" value="<TMPL_VAR NAME=TOUR_ID>"/>
+                            <input type="submit" id="make-order" class="btn btn-primary" value="Заказать путёвку" />
+                        </form>
+                    </TMPL_LOOP>
+                </TMPL_IF>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#tours').addClass("active");
+});
+</script>
+
+<TMPL_INCLUDE NAME="footer.tmpl" />

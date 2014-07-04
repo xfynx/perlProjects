@@ -1,0 +1,72 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br>
+        <div class="page-header">
+            <h1>Вход</h1>
+            <TMPL_IF NAME="MAIL">
+                <p>Приветствуем, <TMPL_VAR NAME= MAIL />!
+                    Ваши права: <TMPL_VAR NAME=ROLE />.
+                </p>
+                <TMPL_ELSE />
+                <form action="../cgi-bin/login_new.pl" method="POST">
+                    <input type="email" class="form-control" name="EMAIL" validation="true" />
+                    <br/>
+                    <input type="password" class="form-control" id="pass" name="PASSWORD" validation="true" />
+                    <br/>
+                    <input type="submit" class="btn btn-success form-control" value="Войти" />
+                </form>
+                <button class="btn btn-default form-control" data-toggle="modal"
+                        data-target="#registration">
+                    Регистрация
+                </button>
+            </TMPL_IF>
+        </div>
+
+        <div class="modal fade" id="registration" tabindex="-1" role="dialog" aria-labelledby="registration"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="../../cgi-bin/registration.pl" method="POST">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="registration">Регистрация нового пользователя</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input class="form-control" type="email" name="login" placeholder="Логин" validation="true"/>
+                            <br/>
+                            <input class="form-control" type="password" name="password" placeholder="Пароль" validation="true"/>
+                            <br/>
+                            <input class="form-control" type="text" name="full-name" placeholder="ФИО"/>
+                            <br/>
+                            <input class="form-control" type="date" name="birth" placeholder="Дата рождения"/>
+                            <br/>
+                            <input class="form-control" type="number" name="phone" placeholder="Телефон"/>
+                            <br/>
+                            <textarea class="form-control" name="passport-info" rows="3" placeholder="Пасспортные данные: номер и серия, прописка, где выдан."></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary glyphicon glyphicon-remove"
+                                    data-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-success glyphicon glyphicon-floppy-saved">Зарегистрироваться</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+            $('#home').addClass("active");
+            });
+        </script>
+
+        <script type="text/javascript">
+            var name = document.getElementById("pass");
+            $(name).blur(function(){
+            if (name.value === "") {
+            name.setCustomValidity("Please fill out the field with your password");
+            }
+            });
+        </script>
+
+        <TMPL_INCLUDE NAME="footer.tmpl" />

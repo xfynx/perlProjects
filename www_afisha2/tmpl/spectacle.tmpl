@@ -1,0 +1,130 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <h1>Список спектаклей</h1>
+                <TMPL_IF NAME="ROWS">
+                    <table class="table">
+                        <th>Название</th>
+                        <th>Начало</th>
+                        <th>Продолжительность</th>
+                        <th>Театр</th>
+                        <th>Количество билетов</th>
+
+                        <th>Редактировать</th>
+                        <th>Удалить</th>
+                        <TMPL_LOOP ROWS>
+                            <tr>
+                                <td>
+                                    <TMPL_VAR NAME= NAME>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= BEGIN_AT>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= DURATION>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= THEATRE>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= TICKET_COUNT>
+                                </td>
+                                <form action="../../cgi-bin/spectacle/showSpectacle.pl" method="GET">
+                                    <input hidden="true" name="id" value="<TMPL_VAR NAME=ID>"/>
+                                    <td>
+                                        <input type="submit" class="btn btn-primary" value="Перейти"/>
+                                    </td>
+                                </form>
+
+                                <td>
+                                    <button class="btn btn-danger glyphicon glyphicon-remove" data-toggle="modal"
+                                            data-target="#delete-spectacle-modal"></button>
+                                </td>
+
+                                <form action="../../cgi-bin/spectacle/deleteSpectacle.pl" method="POST">
+                                    <input type="text" hidden="true" name="id" value="<TMPL_VAR NAME=ID>" />
+                                    <div class="modal fade" id="delete-spectacle-modal" tabindex="-1" role="dialog" aria-labelledby="delete-spectacle"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="delete-spectacle">Удалить запись</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Вы действительно хотите удалить спектакль?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                            data-dismiss="modal">Отмена</button>
+                                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </tr>
+                        </TMPL_LOOP>
+                    </table>
+                </TMPL_IF>
+                <!--<hr/>-->
+                <!-- Button trigger modal -->
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-ok" data-toggle="modal"
+                        data-target="#add-spectacle-modal">
+                    Добавить
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="add-spectacle-modal" tabindex="-1" role="dialog" aria-labelledby="addSpectacle"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="../../cgi-bin/spectacle/addSpectacle.pl" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="addSpectacle">Добавить спектакль</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" type="text" name="name" placeholder="Название"/>
+                                    <br/>
+                                    <input class="form-control" type="date" name="begin" placeholder="Начало"/>
+                                    <br/>
+                                    <input class="form-control" type="time" name="duration" placeholder="Продолжительность"/>
+                                    <br/>
+                                    <textarea class="form-control" name="description" placeholder="Описание, актёрский состав"></textarea>
+                                    <br/>
+                                    <select class="form-control" name="theatre">
+                                        <TMPL_LOOP THEATERS>
+                                            <option>
+                                                <TMPL_VAR NAME= NAME>
+                                            </option>
+                                        </TMPL_LOOP>
+                                    </select>
+                                    <br/>
+                                    <input class="form-control" type="number" name="count" placeholder="Количество билетов"/>
+                                    <br/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove"
+                                            data-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-success glyphicon glyphicon-floppy-saved">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+            $('#spectacles').addClass("active");
+            });
+        </script>
+        <!--<br/>-->
+        <TMPL_INCLUDE NAME="footer.tmpl">

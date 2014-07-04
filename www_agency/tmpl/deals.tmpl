@@ -1,0 +1,46 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <h1>Сделки</h1>
+                <TMPL_IF NAME="ROWS">
+                    <table class="table">
+                        <th>Клиент</th>
+                        <th>Владелец</th>
+                        <th>Дата</th>
+                        <th>Перейти</th>
+
+                        <TMPL_LOOP ROWS>
+                            <tr>
+                                <p hidden="true"><TMPL_VAR NAME= IDCLIENT></p>
+                                <p hidden="true"><TMPL_VAR NAME= IDOWNER></p>
+                                <td>
+                                    <TMPL_VAR NAME= CLIENT>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= OWNER>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= DATE>
+                                </td>
+                                <form action="../../cgi-bin/accomodation/showAccomodation.pl" method="GET">
+                                    <input hidden="true" name="id" id="show-entry" value="<TMPL_VAR NAME=ID>"/>
+                                    <td>
+                                        <input type="submit" class="btn btn-primary" value="Перейти"/>
+                                    </td>
+                                </form>
+                            </tr>
+                        </TMPL_LOOP>
+                    </table>
+                </TMPL_IF>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $('#deals').addClass("active");
+            });
+        </script>
+        <!--<br/>-->
+        <TMPL_INCLUDE NAME="footer.tmpl">

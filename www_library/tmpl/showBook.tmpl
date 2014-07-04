@@ -1,0 +1,73 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br/>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <h1>Данные по книге</h1>
+                <TMPL_IF NAME="DATA">
+                    <TMPL_LOOP DATA />
+                    <form action="../book/editBook.pl" method="POST">
+                        <input name="id" hidden="true" value="<TMPL_VAR NAME=ID>"/>
+                        <h5>Название
+                            <br/>
+                            <input class="form-control" type="text" name="name" value="<TMPL_VAR NAME=NAME>"/>
+                        </h5>
+                        <h5>Год издания
+                            <br/>
+                            <input type="time" class="form-control" name="date" value="<TMPL_VAR NAME=DATE>"/>
+                        </h5>
+                        <h5>Количество
+                            <br/>
+                            <input type="number" class="form-control" name="count" value="<TMPL_VAR NAME=COUNT>"/>
+                        </h5>
+                        <h5>Автор: <TMPL_VAR NAME=AUTHOR></h5>
+                        <h5>Издатель: <TMPL_VAR NAME=PUBLISHER></h5>
+                    </TMPL_LOOP>
+                    <h5>Выбрать издателя
+                        <br/>
+                        <select class="form-control" name="publisher">
+                            <TMPL_LOOP PUBLISHERS />
+                            <option>
+                                <TMPL_VAR NAME= NAME />
+                            </option>
+                            </TMPL_LOOP>
+                        </select>
+                    </h5>
+                    <h5>Выбрать автора
+                        <br/>
+                        <select class="form-control" name="author">
+                            <TMPL_LOOP AUTHORS />
+                            <option>
+                                <TMPL_VAR NAME= NAME />
+                            </option>
+                            </TMPL_LOOP>
+                        </select>
+                    </h5>
+                <input type="submit" class="btn btn-primary glyphicon" value="EDIT"/>
+            </form>
+        </TMPL_IF>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <h1>Взять книгу</h1>
+            <form action="../order/makeOrder.pl" method="GET">
+                <TMPL_LOOP ID />
+                <input hidden="true" name="id_book" value="<TMPL_VAR NAME=ID />"/>
+            </TMPL_LOOP>
+    <br/>
+    <input type="submit" class="btn btn-primary glyphicon" value="Заказать"/>
+</form>
+</div>
+</div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+    $('#books').addClass("active");
+});
+</script>
+
+<TMPL_INCLUDE NAME="footer.tmpl">

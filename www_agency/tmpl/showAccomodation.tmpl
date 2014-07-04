@@ -1,0 +1,79 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br/>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h1>Данные по объявлению</h1>
+                <br/>
+                <TMPL_IF NAME="ROWS">
+                    <TMPL_LOOP ROWS>
+                            <h5>Дата размещения:
+                                <TMPL_VAR NAME= DATE />
+                            </h5>
+                            <h5>Тип объявления:
+                                <TMPL_VAR NAME= ACCOMODATION_TYPE />
+                            </h5>
+                            <h5>
+                                Автор: <b><TMPL_VAR NAME= FULL_NAME /></b>
+                            </h5>
+                            <h5>
+                                Телефон: <b><TMPL_VAR NAME= PHONE /></b>
+                            </h5>
+                            <h5>
+                                Тип жилья: <TMPL_VAR NAME= TYPE />
+                            </h5>
+                            <h5>
+                                Район: <TMPL_VAR NAME= DISTRICT />
+                            </h5>
+                            <h5>
+                                Жилая площадь <TMPL_VAR NAME= SQUARE /> квадратных метров.
+                            </h5>
+                            <h5>
+                                Цена: <TMPL_VAR NAME= PRICE />
+                            </h5>
+                            <h5>
+                                Количество комнат: <TMPL_VAR NAME= CHAMBER_COUNT />
+                            </h5>
+                            <h5>
+                                Адрес: <TMPL_VAR NAME= ADDRESS />
+                            </h5>
+                            <h5>
+                                Статус объявления: <b id="status"><TMPL_VAR NAME= STATUS /></b>
+                            </h5>
+                            <h5>
+                                <br/>
+                                <b><TMPL_VAR NAME= DESCRIPTION /></b>
+                            </h5>
+                        <form action="../../cgi-bin/deal/makeDeal.pl" method="POST">
+                            <input name="id" hidden="true" value="<TMPL_VAR NAME=ID>"/>
+                            <input type="submit" id="make-order" class="btn btn-primary" value="Сделать заказ" />
+                        </form>
+
+                        <form action="../../cgi-bin/accomodation/closeAccomodation.pl" method="POST">
+                            <input name="id" hidden="true" value="<TMPL_VAR NAME=ID>"/>
+
+                    </TMPL_LOOP>
+                </TMPL_IF>
+
+                            <TMPL_IF NAME="USERID"/>
+                                <input hidden="true" value="<TMPL_VAR NAME= USERID />"/>
+                                <input id="close" type="submit" class="btn btn-danger glyphicon" value='Закрыть' onclick="return confirm('Вы точно хотите закрыть объявление?')">
+                            </TMPL_IF>
+        </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#accomodations').addClass("active");
+            var status = $('#status').text();
+            if(status==="inactive"){
+                $('#make-order').prop('disabled', true);
+                $('#close').prop('disabled', true);
+            }
+        });
+    </script>
+
+    <TMPL_INCLUDE NAME="footer.tmpl" />

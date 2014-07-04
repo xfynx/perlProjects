@@ -1,0 +1,103 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <h1>Список издателей</h1>
+                <TMPL_IF NAME="ROWS">
+                    <table class="table">
+                        <th>Название</th>
+                        <th>Город</th>
+
+                        <th>Редактировать</th>
+                        <th>Удалить</th>
+                        <TMPL_LOOP ROWS>
+                            <tr>
+                                <td>
+                                    <TMPL_VAR NAME= NAME>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= CITY>
+                                </td>
+                                <form action="../../cgi-bin/publisher/showPublisher.pl" method="GET">
+                                    <input hidden="true" name="id" value="<TMPL_VAR NAME=ID>"/>
+                                    <td>
+                                        <input type="submit" class="btn btn-primary" value="Перейти"/>
+                                    </td>
+                                </form>
+
+                                <td>
+                                    <button class="btn btn-danger glyphicon glyphicon-remove" data-toggle="modal"
+                                            data-target="#delete-publisher-modal"></button>
+                                </td>
+
+                                <form action="../../cgi-bin/publisher/deletePublisher.pl" method="POST">
+                                    <div class="modal fade" id="delete-publisher-modal" tabindex="-1" role="dialog" aria-labelledby="delete-publisher"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="delete-publisher">Удалить запись</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Вы действительно хотите удалить издателя?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                            data-dismiss="modal">Отмена</button>
+                                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </tr>
+                        </TMPL_LOOP>
+                    </table>
+                </TMPL_IF>
+                <!--<hr/>-->
+                <!-- Button trigger modal -->
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-ok" data-toggle="modal"
+                        data-target="#add-publisher-modal">
+                    Добавить
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="add-publisher-modal" tabindex="-1" role="dialog" aria-labelledby="addPublisher"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="../../cgi-bin/publisher/addPublisher.pl" method="GET">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="addPublisher">Добавить издателя</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" type="text" name="name" placeholder="Название"/>
+                                    <br/>
+                                    <input class="form-control" type="text" name="city" placeholder="Город"/>
+                                    <br/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove"
+                                            data-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-success glyphicon glyphicon-floppy-saved">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+            $('#publishers').addClass("active");
+            });
+        </script>
+        <!--<br/>-->
+        <TMPL_INCLUDE NAME="footer.tmpl" />

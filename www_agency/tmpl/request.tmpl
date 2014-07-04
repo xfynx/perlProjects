@@ -1,0 +1,162 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+<br/>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <h1>Список заявок</h1>
+                <TMPL_IF NAME="ROWS">
+                    <table class="table">
+                        <th>Дата</th>
+                        <th>Тип заявки</th>
+                        <th>ФИО автора</th>
+                        <th>Тип жилья</th>
+                        <th>Район</th>
+                        <th>Желаемая жил.площадь</th>
+                        <th>Диапазон цены</th>
+                        <th>Количество комнат</th>
+                        <th>Статус заявки</th>
+
+                        <th>Редактировать</th>
+                        <th>Удалить</th>
+                        <TMPL_LOOP ROWS />
+                            <tr>
+                                <td>
+                                    <TMPL_VAR NAME= DATE />
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= REQUEST_TYPE />
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= FULL_NAME />
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= TYPE />
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= DISTRICT />
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= SQUARE />
+                                </td>
+                                <td>
+                                    От <TMPL_VAR NAME= PRICE_FROM /> до <TMPL_VAR NAME= PRICE_TO />
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= CHAMBER_COUNT />
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= STATUS />
+                                </td>
+                                <form action="../../cgi-bin/request/showRequest.pl" method="GET">
+                                    <input hidden="true" name="id" id="show-entry" value="<TMPL_VAR NAME=ID>"/>
+                                    <td>
+                                        <input type="submit" class="btn btn-primary" value="Перейти"/>
+                                    </td>
+                                </form>
+
+                                <td>
+                                    <button class="btn btn-danger glyphicon glyphicon-remove" data-toggle="modal"
+                                            data-target="#delete-request-modal"></button>
+                                </td>
+
+                                <form action="../../cgi-bin/request/deleteRequest.pl" method="GET">
+                                    <input type="text" hidden="true" name="id" value="<TMPL_VAR NAME=ID>" />
+                                    <div class="modal fade" id="delete-request-modal" tabindex="-1" role="dialog" aria-labelledby="delete-request"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="delete-request">Удалить запись</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Вы действительно хотите удалить объявление? Действие доступно только администраторам.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                            data-dismiss="modal">Отмена</button>
+                                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </tr>
+                        </TMPL_LOOP>
+                    </table>
+                </TMPL_IF>
+                <!--<hr/>-->
+                <!-- Button trigger modal -->
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-ok" data-toggle="modal"
+                        data-target="#add-request-modal">
+                    Добавить
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="add-request-modal" tabindex="-1" role="dialog" aria-labelledby="add-request"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="../../cgi-bin/request/addRequest.pl" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="add-request">Добавить объявление</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" type="date" name="date" placeholder="Дата"/>
+                                    <br/>
+                                    <select class="form-control" name="request-type">
+                                        <option>Сниму</option>
+                                        <option>Куплю</option>
+                                    </select>
+                                    <br/>
+                                    <select class="form-control" name="type">
+                                        <option>Квартира</option>
+                                        <option>Дом</option>
+                                        <option>Комната</option>
+                                        <option>Коттедж</option>
+                                        <option>Дача</option>
+                                    </select>
+                                    <br/>
+                                    <select class="form-control" name="district">
+                                        <option>Промышленный</option>
+                                        <option>Центральный</option>
+                                        <option>Степной</option>
+                                        <option>Ленинский</option>
+                                        <option>Южный</option>
+                                        <option>23 мкр</option>
+                                        <option>24 мкр</option>
+                                        <option>пос. Куйбышев</option>
+                                        <option>пос. Нежинка</option>
+                                    </select>
+                                    <br/>
+                                    <input class="form-control" type="number" name="chamber-count" placeholder="Количество комнат"/>
+                                    <br/>
+                                    <input class="form-control" type="number" name="square" placeholder="Желаемая жил.площадь"/>
+                                    <br/>
+                                    <input class="form-control" type="number" name="price-from" placeholder="Цена от"/>
+                                    <br/>
+                                    <input class="form-control" type="number" name="price-to" placeholder="Цена до"/>
+                                    <br/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove"
+                                            data-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-success glyphicon glyphicon-floppy-saved">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#requests').addClass("active");
+            });
+        </script>
+
+        <TMPL_INCLUDE NAME="footer.tmpl" />

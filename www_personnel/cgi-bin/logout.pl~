@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+use CGI::Carp qw(fatalsToBrowser);
+use CGI qw( :standard);
+
+unlink '/home/antony/auth.txt';
+print "Content-type: text/html\n\n";
+print '<html><META http-equiv="refresh" content="0; http://localhost/perlProject/cgi-bin/login_new.pl"></html>';
+exit;

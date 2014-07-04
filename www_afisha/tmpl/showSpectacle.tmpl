@@ -1,0 +1,78 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br/>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <h1>Данные по спектаклю</h1>
+                <TMPL_IF NAME="DATA">
+                    <TMPL_LOOP DATA />
+                        <form action="../spectacle/editSpectacle.pl" method="POST">
+                        <input name="id" hidden="true" value="<TMPL_VAR NAME=ID>"/>
+                        <h5>Название
+                            <br/>
+                            <input class="form-control" type="text" name="name" value="<TMPL_VAR NAME=NAME>"/>
+                        </h5>
+                        <h5>Начало в
+                            <br/>
+                            <input type="datetime" class="form-control" name="begin" value="<TMPL_VAR NAME=BEGIN_AT>"/>
+                        </h5>
+                        <h5>Длительность
+                            <br/>
+                            <input type="time" class="form-control" name="duration" value="<TMPL_VAR NAME=DURATION>"/>
+                        </h5>
+                        <h5>Количество билетов
+                            <br/>
+                            <input type="number" class="form-control" name="count" value="<TMPL_VAR NAME=TICKET_COUNT>"/>
+                        </h5>
+                    </TMPL_LOOP>
+                    <h5>Театр
+                        <br/>
+                        <select class="form-control" name="theatre">
+                            <TMPL_LOOP THEATERS />
+                                <option>
+                                    <TMPL_VAR NAME= NAME />
+                                </option>
+                            </TMPL_LOOP>
+                        </select>
+                    </h5>
+                    <input type="submit" class="btn btn-primary glyphicon" value="EDIT"/>
+                </form>
+            </TMPL_IF>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <h1>Заказать билет</h1>
+                <form action="../order/makeOrder.pl" method="GET">
+                    <TMPL_LOOP ID />
+                        <input hidden="true" name="id_spectacle" value="<TMPL_VAR NAME=ID />"/>
+                    </TMPL_LOOP>
+                    <br/>
+                    Заказанные места
+                    <select class="form-control">
+                        <TMPL_LOOP PLACES />
+                            <option>
+                                <TMPL_VAR NAME= PLACE />
+                            </option>
+                        </TMPL_LOOP>
+                    </select>
+                    <br/>
+                    <TMPL_LOOP TOTAL_COUNT />
+                        <input type="number" name="place" class="form-control" min="1" max="<TMPL_VAR NAME= PLACE_COUNT />" placeholder="Место"/>
+                    </TMPL_LOOP>
+                    <br/>
+                    <input type="submit" class="btn btn-primary glyphicon" value="Заказать"/>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+$(document).ready(function() {
+$('#spectacles').addClass("active");
+});
+</script>
+
+<TMPL_INCLUDE NAME="footer.tmpl">

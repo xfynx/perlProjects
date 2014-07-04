@@ -1,0 +1,46 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br/>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h1>Данные о родственнике</h1>
+                <TMPL_IF NAME="DATA">
+                    <TMPL_LOOP DATA>
+                        <form action="../../cgi-bin/family/editFam.pl" method="POST">
+                            <input name="id" hidden="true" value="<TMPL_VAR NAME=ID>"/>
+                            <h5>Имя
+                                <br/>
+                                <input class="form-control" type="text" name="first" value="<TMPL_VAR NAME=FIRST_NAME>"
+                                       placeholder="First name"/>
+                            </h5>
+                            <h5>Отчество
+                                <br/>
+                                <input type="text" class="form-control" name="middle"
+                                       value="<TMPL_VAR NAME=MIDDLE_NAME>"/>
+                            </h5>
+                            <h5>Фамилия
+                                <br/>
+                                <input type="text" class="form-control" name="last"
+                                       value="<TMPL_VAR NAME=LAST_NAME>"/>
+                            </h5>
+                            <h5>Дата рождения
+                                <br/>
+                                <input type="text" class="form-control" name="birth"
+                                       value="<TMPL_VAR NAME=BIRTH_DATE>"/>
+                            </h5>
+                            <input type="submit" class="btn btn-primary glyphicon" value="EDIT"/>
+                        </form>
+                    </TMPL_LOOP>
+                </TMPL_IF>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+        $('#personnel').addClass("active");
+        });
+    </script>
+
+    <TMPL_INCLUDE NAME="footer.tmpl">

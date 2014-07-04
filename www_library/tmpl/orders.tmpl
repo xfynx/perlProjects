@@ -1,0 +1,41 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <h1>Выдачи</h1>
+                <TMPL_IF NAME="ROWS">
+                    <table class="table">
+                        <th>Название</th>
+                        <th>Кто взял</th>
+                        <th>Когда взял</th>
+                        <th>Когда отдал</th>
+
+                        <TMPL_LOOP ROWS>
+                            <tr>
+                                <td>
+                                    <TMPL_VAR NAME= NAME>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= LOGIN>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= DATE_GET>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= DATE_RETURN>
+                                </td>
+                            </tr>
+                        </TMPL_LOOP>
+                    </table>
+                </TMPL_IF>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+            $('#orders').addClass("active");
+            });
+        </script>
+        <!--<br/>-->
+        <TMPL_INCLUDE NAME="footer.tmpl">

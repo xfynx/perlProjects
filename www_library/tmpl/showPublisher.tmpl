@@ -1,0 +1,36 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br/>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h1>Данные по издателю</h1>
+                <TMPL_IF NAME="DATA">
+                    <TMPL_LOOP DATA>
+                        <form action="../../cgi-bin/publisher/editPublisher.pl" method="POST">
+                            <input name="id" hidden="true" value="<TMPL_VAR NAME=ID>"/>
+                            <h5>Название
+                                <br/>
+                                <input class="form-control" type="text" name="name" value="<TMPL_VAR NAME=NAME>"
+                                       placeholder="Name"/>
+                            </h5>
+                            <h5>Город
+                                <br/>
+                                <input class="form-control" type="text" name="city" value="<TMPL_VAR NAME=CITY>"
+                                       placeholder="Name"/>
+                            </h5>
+                            <input type="submit" class="btn btn-primary glyphicon" value="EDIT"/>
+                        </form>
+                    </TMPL_LOOP>
+                </TMPL_IF>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+        $('#publishers').addClass("active");
+        });
+    </script>
+
+    <TMPL_INCLUDE NAME="footer.tmpl" />

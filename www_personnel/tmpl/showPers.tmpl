@@ -1,0 +1,173 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br/>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <h1>Данные по персоналу</h1>
+                <TMPL_IF NAME="DATA">
+                    <TMPL_LOOP DATA />
+                        <form action="../../cgi-bin/pers/editPers.pl" method="POST">
+                        <input name="id" hidden="true" value="<TMPL_VAR NAME=ID>"/>
+                        <h5>Имя
+                            <br/>
+                            <input class="form-control" type="text" name="first" value="<TMPL_VAR NAME=FIRST_NAME>"
+                                   placeholder="First name"/>
+                        </h5>
+                        <h5>Отчество
+                            <br/>
+                            <input type="text" class="form-control" name="middle" value="<TMPL_VAR NAME=MIDDLE_NAME>"/>
+                        </h5>
+                        <h5>Фамилия
+                            <br/>
+                            <input type="text" class="form-control" name="last" value="<TMPL_VAR NAME=LAST_NAME>"/>
+                        </h5>
+                        <h5>Адрес
+                            <br/>
+                            <input type="text" class="form-control" name="address" value="<TMPL_VAR NAME=ADDRESS>"/>
+                        </h5>
+                        <h5>Номер телефона
+                            <br/>
+                            <input type="number" class="form-control" name="phone"
+                                   value="<TMPL_VAR NAME=PHONE_NUMBER>"/>
+                        </h5>
+                        <h5>Дата рождения
+                            <br/>
+                            <input type="date" class="form-control" name="birth" value="<TMPL_VAR NAME=BIRTH_DATE>"/>
+                        </h5>
+                        <h5>Образование
+                            <br/>
+                            <input type="text" class="form-control" name="education" value="<TMPL_VAR NAME=EDUCATION>"/>
+                        </h5>
+                        <h5>Дата назначения
+                            <br/>
+                            <input type="date" class="form-control" name="post_date" value="<TMPL_VAR NAME=POST_DATE>"/>
+                        </h5>
+                        <h5>Опыт работы
+                            <br/>
+                            <input type="number" class="form-control" name="expirience"
+                                   value="<TMPL_VAR NAME=EXPIRIENCE>"/>
+                        </h5>
+                        <h5>Должность
+                            <br/>
+                            <input type="text" class="form-control" name="post" value="<TMPL_VAR NAME=POST>"/>
+                        </h5>
+                        <h5>ИНН
+                            <br/>
+                            <input type="number" class="form-control" name="inn" value="<TMPL_VAR NAME=INN>"/>
+                        </h5>
+                        <h5>СНИЛС
+                            <br/>
+                            <input type="number" class="form-control" name="snils" value="<TMPL_VAR NAME=SNILS>"/>
+                        </h5>
+                        <h5>Отдел: <TMPL_VAR NAME=UNIT> </h5>
+                    </TMPL_LOOP>
+                    <h5>Изменить отдел
+                        <br/>
+                        <select class="form-control" name="unitname">
+                            <TMPL_LOOP UNITNAMES />
+                                <option>
+                                    <TMPL_VAR NAME= NAME />
+                                </option>
+                            </TMPL_LOOP>
+                        </select>
+                    </h5>
+                    <input type="submit" class="btn btn-primary glyphicon" value="EDIT"/>
+                </form>
+            </TMPL_IF>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <h1>Родственники</h1>
+                <TMPL_IF NAME="RELATIVES" />
+                    <TMPL_LOOP RELATIVES />
+                        <input name="id" hidden="true" value="<TMPL_VAR NAME=ID>"/>
+                        <h4>
+                            <form action="../../cgi-bin/family/showFam.pl" method="GET">
+                                <TMPL_VAR NAME= FIRST_NAME />
+                                <TMPL_VAR NAME= MIDDLE_NAME />
+                                <TMPL_VAR NAME= LAST_NAME />,
+                                <TMPL_VAR NAME= BIRTH_DATE />.
+                                <input hidden="true" id="pass" name="id" value="<TMPL_VAR NAME=ID>"/>
+                                <input type="submit" class="btn btn-sm btn-primary" value="Перейти"/>
+                                <button class="btn btn-sm btn-danger glyphicon glyphicon-remove" data-toggle="modal"
+                                        data-target="#delete-fam-modal"></button>
+                            </form>
+                        </h4>
+
+                        <form action="../../cgi-bin/family/deleteFam.pl" method="POST">
+                            <div class="modal fade" id="delete-fam-modal" tabindex="-1" role="dialog" aria-labelledby="delete-fam"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="delete-people">Удалить запись</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            Вы действительно хотите удалить запись о родственнике?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                    data-dismiss="modal">Отмена</button>
+                                            <button type="submit" class="btn btn-danger">Удалить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br/>
+                    </TMPL_LOOP>
+                </TMPL_IF>
+                <!--добавление родственника, модальное окно-->
+                <!-- Button trigger modal -->
+                <button class="btn btn-primary glyphicon glyphicon-ok" data-toggle="modal"
+                        data-target="#add-relate-modal">
+                    Добавить
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="add-relate-modal" tabindex="-1" role="dialog" aria-labelledby="add-relate"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="../../cgi-bin/family/addFam.pl" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="add-relate">Добавить родственника</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input hidden="true" name="pers-id" value="<TMPL_VAR NAME=PERS_ID>"/>
+                                    <input class="form-control" type="text" name="first" placeholder="Имя"/>
+                                    <br/>
+                                    <input class="form-control" type="text" name="middle" placeholder="Фамилия"/>
+                                    <br/>
+                                    <input class="form-control" type="text" name="last" placeholder="Отчество"/>
+                                    <br/>
+                                    <input class="form-control" type="date" name="birth" placeholder="Дата рождения"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove"
+                                            data-dismiss="modal">Отмена
+                                    </button>
+                                    <button type="submit" class="btn btn-success glyphicon glyphicon-floppy-saved">
+                                        Сохранить
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<script>
+$(document).ready(function() {
+$('#personnel').addClass("active");
+});
+</script>
+
+<TMPL_INCLUDE NAME="footer.tmpl">

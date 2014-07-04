@@ -1,0 +1,133 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <h1>Список книг</h1>
+                <TMPL_IF NAME="ROWS">
+                    <table class="table">
+                        <th>Издатель</th>
+                        <th>Автор</th>
+                        <th>Название книги</th>
+                        <th>Год издания</th>
+                        <th>Количество в библиотеке</th>
+
+                        <th>Редактировать</th>
+                        <th>Удалить</th>
+                        <TMPL_LOOP ROWS>
+                            <tr>
+                                <td>
+                                    <TMPL_VAR NAME= PUBLISHER>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= AUTHOR>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= NAME>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= DATE>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= COUNT>
+                                </td>
+                                <form action="../../cgi-bin/book/showBook.pl" method="GET">
+                                    <input hidden="true" name="book_id" value="<TMPL_VAR NAME=ID>"/>
+                                    <td>
+                                        <input type="submit" class="btn btn-primary" value="Перейти"/>
+                                    </td>
+                                </form>
+
+                                <td>
+                                    <button class="btn btn-danger glyphicon glyphicon-remove" data-toggle="modal"
+                                            data-target="#delete-book-modal"></button>
+                                </td>
+
+                                <form action="../../cgi-bin/book/deleteBook.pl" method="POST">
+                                    <div class="modal fade" id="delete-book-modal" tabindex="-1" role="dialog" aria-labelledby="delete-book"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="delete-spectacle">Удалить запись</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Вы действительно хотите удалить книгу?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                            data-dismiss="modal">Отмена</button>
+                                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </tr>
+                        </TMPL_LOOP>
+                    </table>
+                </TMPL_IF>
+                <!--<hr/>-->
+                <!-- Button trigger modal -->
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-ok" data-toggle="modal"
+                        data-target="#add-book-modal">
+                    Добавить
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="add-book-modal" tabindex="-1" role="dialog" aria-labelledby="addBook"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="../../cgi-bin/book/addBook.pl" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="addSpectacle">Добавить книгу</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <select class="form-control" name="publisher">
+                                        <TMPL_LOOP PUBLISHERS>
+                                            <option>
+                                                <TMPL_VAR NAME= NAME>
+                                            </option>
+                                        </TMPL_LOOP>
+                                    </select>
+                                    <br/>
+                                    <select class="form-control" name="author">
+                                        <TMPL_LOOP AUTHORS>
+                                            <option>
+                                                <TMPL_VAR NAME= NAME>
+                                            </option>
+                                        </TMPL_LOOP>
+                                    </select>
+                                    <br/>
+                                    <input class="form-control" type="text" name="name" placeholder="Название"/>
+                                    <br/>
+                                    <input class="form-control" type="date" name="date" placeholder="Год издания"/>
+                                    <br/>
+                                    <input class="form-control" type="number" name="count" placeholder="Количество"/>
+                                    <br/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove"
+                                            data-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-success glyphicon glyphicon-floppy-saved">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $('#books').addClass("active");
+            });
+        </script>
+        <!--<br/>-->
+        <TMPL_INCLUDE NAME="footer.tmpl" />

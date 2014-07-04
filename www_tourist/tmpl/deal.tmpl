@@ -1,0 +1,52 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <h1>Заказы</h1>
+                <TMPL_IF NAME="ROWS">
+                    <table class="table">
+                        <th>Кто</th>
+                        <th>На какое число</th>
+                        <th>Страна, город</th>
+                        <th>Отель</th>
+                        <th>Стоимость путёвки</th>
+                        <th>Посмотреть тур</th>
+
+                        <TMPL_LOOP ROWS>
+                            <tr>
+                                <td>
+                                    <TMPL_VAR NAME= FULL_NAME>, тел.: <b><TMPL_VAR NAME= PHONE></b>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= DATE>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= COUNTRY>, <TMPL_VAR NAME= CITY>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= HOTEL>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= PRICE>
+                                </td>
+                                <td>
+                                    <form action="../../cgi-bin/tour/showTour.pl" method="GET">
+                                        <input hidden="true" name="id" value="<TMPL_VAR NAME= ID_TOUR>"/>
+                                        <input type="submit" class="btn btn-primary" value="Перейти" />
+                                    </form>
+                                </td>
+                            </tr>
+                        </TMPL_LOOP>
+                    </table>
+                </TMPL_IF>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+            $('#permits').addClass("active");
+            });
+        </script>
+        <!--<br/>-->
+        <TMPL_INCLUDE NAME="footer.tmpl">

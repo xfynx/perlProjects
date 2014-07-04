@@ -1,0 +1,179 @@
+<TMPL_INCLUDE NAME="header.tmpl">
+    <br>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12"></div>
+                <h1>Данные по персоналу</h1>
+                <TMPL_IF NAME="ROWS">
+                    <table class="table">
+                        <th>Имя</th>
+                        <th>Отчество</th>
+                        <th>Фамилия</th>
+                        <th>Адрес</th>
+                        <th>Номер телефона</th>
+                        <th>Дата рождения</th>
+                        <th>Должность</th>
+                        <th>Дата найма</th>
+                        <th>Опыт</th>
+                        <th>Образование</th>
+                        <!--<th>ИНН</th>-->
+                        <!--<th>СНИЛС</th>-->
+                        <th>Отдел</th>
+                        <th>Редактировать</th>
+                        <th>Удалить</th>
+                        <TMPL_LOOP ROWS>
+                            <tr>
+                                <td>
+                                    <TMPL_VAR NAME= FIRST_NAME>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= MIDDLE_NAME>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= LAST_NAME>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= ADDRESS>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= PHONE_NUMBER>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= BIRTH_DATE>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= POST>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= POST_DATE>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= EXPIRIENCE>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= EDUCATION>
+                                </td>
+                                <td hidden="true">
+                                    <TMPL_VAR NAME= INN>
+                                </td>
+                                <td hidden="true">
+                                    <TMPL_VAR NAME= SNILS>
+                                </td>
+                                <td>
+                                    <TMPL_VAR NAME= NAME>
+                                </td>
+
+                                <form action="../../cgi-bin/pers/showPers.pl" method="GET">
+                                    <input hidden="true" id="pass" name="id" value="<TMPL_VAR NAME=ID>"/>
+                                    <td>
+                                        <input type="submit" class="btn btn-primary" value="Перейти"/>
+                                    </td>
+                                </form>
+
+                                <td>
+                                    <button class="btn btn-danger glyphicon glyphicon-remove" data-toggle="modal"
+                                        data-target="#delete-people-modal"></button>
+                                </td>
+
+                                <form action="../../cgi-bin/pers/deletePers.pl" method="POST">
+                                    <div class="modal fade" id="delete-people-modal" tabindex="-1" role="dialog" aria-labelledby="delete-people"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title" id="delete-people">Удалить запись</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Вы действительно хотите удалить запись о человеке?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary"
+                                                                data-dismiss="modal">Отмена</button>
+                                                        <button type="submit" class="btn btn-danger">Удалить</button>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </tr>
+                        </TMPL_LOOP>
+                    </table>
+                </TMPL_IF>
+
+                <!-- Button trigger modal -->
+                <button class="btn btn-primary btn-lg glyphicon glyphicon-ok" data-toggle="modal"
+                        data-target="#add-people-modal">
+                    Добавить
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="add-people-modal" tabindex="-1" role="dialog" aria-labelledby="addPeople"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="../../cgi-bin/pers/addPers.pl" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="addPeople">Добавить человека</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <input class="form-control" type="text" name="first" placeholder="Имя"/>
+                                    <br/>
+                                    <input class="form-control" type="text" name="middle" placeholder="Фамилия"/>
+                                    <br/>
+                                    <input class="form-control" type="text" name="last" placeholder="Отчество"/>
+                                    <br/>
+                                    <input class="form-control" type="text" name="address" placeholder="Адрес"/>
+                                    <br/>
+                                    <input class="form-control" type="number" name="phone"
+                                           placeholder="Номер телефона"/>
+                                    <br/>
+                                    <input class="form-control" type="date" name="birth" placeholder="Дата рождения"/>
+                                    <br/>
+                                    <input class="form-control" type="text" name="education" placeholder="Образование"/>
+                                    <br/>
+                                    <input class="form-control" type="number" name="expirience"
+                                           placeholder="Опыт работы"/>
+                                    <br/>
+                                    <input class="form-control" type="text" name="post" placeholder="Должность"/>
+                                    <br/>
+                                    <input class="form-control" type="date" name="post_date"
+                                           placeholder="Дата назначения"/>
+                                    <br/>
+                                    <input class="form-control" type="number" name="inn" placeholder="ИНН"/>
+                                    <br/>
+                                    <input class="form-control" type="number" name="snils" placeholder="СНИЛС"/>
+                                    <br/>
+                                    <h5>Отдел
+                                        <br/>
+                                        <select class="form-control" name="unitname">
+                                            <TMPL_LOOP UNITNAMES>
+                                                <option>
+                                                    <TMPL_VAR NAME= NAME>
+                                                </option>
+                                            </TMPL_LOOP>
+                                        </select>
+                                    </h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary glyphicon glyphicon-remove"
+                                            data-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-success glyphicon glyphicon-floppy-saved">Сохранить</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+            $('#personnel').addClass("active");
+            });
+        </script>
+        <!--<br/>-->
+        <TMPL_INCLUDE NAME="footer.tmpl">
